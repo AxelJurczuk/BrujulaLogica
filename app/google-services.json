@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "870884178777",
+    "firebase_url": "https://brujula-logica.firebaseio.com",
+    "project_id": "brujula-logica",
+    "storage_bucket": "brujula-logica.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:870884178777:android:ef38bfeb43a728fd1fea48",
+        "android_client_info": {
+          "package_name": "com.example.android.brujulalogica"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "870884178777-b6thvk7n4su29grih5pog0pe5v516m4o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-uFAW45yVskO_vSYtQyKh_UXRVG_H_XI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "870884178777-b6thvk7n4su29grih5pog0pe5v516m4o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

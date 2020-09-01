@@ -1,11 +1,16 @@
 package com.example.android.brujulalogica
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_recycler_view.*
+
+enum class ProviderType {
+    BASIC
+}
 
 class RecyclerView : AppCompatActivity(), ExampleAdapter.OnItemClickListener {
     private val exampleList = generateList()
@@ -15,24 +20,55 @@ class RecyclerView : AppCompatActivity(), ExampleAdapter.OnItemClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recycler_view)
 
-
+        //RecyclerView
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.setHasFixedSize(true)
 
+        //Setup LogIn/LogOut
+        val bundle = intent.extras
+        val email = bundle?.getString("email")
+        val provider = bundle?.getString("provider")
+        setUp(email ?: "", provider ?: "")
+
+        //Save authentication data
+        val prefs =
+            getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+        prefs.putString("email", email)
+        prefs.putString("provider", provider)
+        prefs.apply()
+
+    }
+
+    private fun setUp(email: String, provider: String) {
+        title = "Inicio"
+        emailTextView.text = email
+        providerTextView.text = provider
+
+        logOutButton.setOnClickListener {
+            //Delete logIn data
+            val prefs =
+                getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+            prefs.clear()
+            prefs.apply()
+
+            FirebaseAuth.getInstance().signOut()
+            onBackPressed()
+        }
     }
 
     override fun onItemClick(position: Int) {
-        Toast.makeText(this, "Item $position clicked", Toast.LENGTH_SHORT).show()
+
+        //Toast.makeText(this, "Item $position clicked", Toast.LENGTH_SHORT).show()
         when (position) {
-                4-> {
-                    val intent1 = Intent(this, IngresoFecha::class.java)
-                    startActivity(intent1)
-                }
-                else -> {
-                    val intent1 = Intent(this, RandomActivity::class.java)
-                    startActivity(intent1)
-                }
+            4 -> {
+                val intent1 = Intent(this, NewActivity::class.java)
+                startActivity(intent1)
+            }
+            else -> {
+                val intent1 = Intent(this, NewActivity::class.java)
+                startActivity(intent1)
+            }
 
         }
     }
