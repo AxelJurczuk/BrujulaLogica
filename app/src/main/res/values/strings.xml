@@ -1,4 +1,3 @@
 <resources>
     <string name="app_name">Brujula Logica</string>
-    <string name="prefs_file">com.example.android.brujulalogica.PREFERENCE_FILE_KEY</string>
 </resources>
