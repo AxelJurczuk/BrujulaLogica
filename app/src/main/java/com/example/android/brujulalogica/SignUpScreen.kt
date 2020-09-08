@@ -3,11 +3,9 @@ package com.example.android.brujulalogica
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.login_screen.*
 import kotlinx.android.synthetic.main.sign_up_screen.*
 
 class SignUpScreen : AppCompatActivity() {
@@ -30,13 +28,15 @@ class SignUpScreen : AppCompatActivity() {
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
                             Toast.makeText(this, "Successfully Registered", Toast.LENGTH_LONG).show()
-                            val intent = Intent(this, RecyclerView::class.java)
+                            val intent = Intent(this, MainActivity::class.java)
                             startActivity(intent)
                             finish()
                         } else {
                             showAlert()
                         }
                     }
+            }else{
+                Toast.makeText(this, "Please complete the fields", Toast.LENGTH_LONG).show()
             }
         }
     }

@@ -9,23 +9,25 @@ import android.widget.EditText
 import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.forgot_password.*
 
 class ForgotPassword : AppCompatActivity() {
 
-    private lateinit var email:EditText
-    private lateinit var resetButton: Button
+
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.forgot_password)
 
-        email= findViewById(R.id.emailToReset)
-        resetButton= findViewById(R.id.reset_pass_button)
         auth= FirebaseAuth.getInstance()
 
-        resetButton.setOnClickListener {
-            var email = email.text.toString()
+        resetPassword()
+    }
+
+    private fun resetPassword (){
+        reset_pass_button.setOnClickListener {
+            var email = emailToReset.text.toString()
             if (email.isEmpty()) {
                 Toast.makeText(this, "Por favor ingrese su email", Toast.LENGTH_LONG).show()
             } else {

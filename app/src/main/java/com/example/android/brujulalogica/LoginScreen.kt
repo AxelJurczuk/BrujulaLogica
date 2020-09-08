@@ -1,16 +1,12 @@
 package com.example.android.brujulalogica
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
-import android.view.View
-import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.login_screen.*
+import timber.log.Timber
 
 class LoginScreen : AppCompatActivity() {
 
@@ -22,13 +18,15 @@ class LoginScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        Timber.i ("onCreated called")
+
         auth = FirebaseAuth.getInstance()
 
         //listener to check if the user is logged in
         authStateListener = FirebaseAuth.AuthStateListener { auth ->
             val firebaseUser = auth.currentUser
             if (firebaseUser != null) {
-                val intent = Intent(this, RecyclerView::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             }
@@ -43,16 +41,36 @@ class LoginScreen : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         auth!!.addAuthStateListener(this.authStateListener!!)
+        Timber.i ("onStart called")
+
     }
 
-    /* onStop??
+
     override fun onStop() {
         super.onStop()
-        firebaseAuth!!.removeAuthStateListener(this.authStateListener!!)
+        auth!!.removeAuthStateListener(this.authStateListener!!)
+        Timber.i ("onStop called")
     }
 
-     */
+    override fun onPause() {
+        super.onPause()
+        Timber.i ("onPause called")
+    }
 
+    override fun onResume() {
+        super.onResume()
+        Timber.i ("onResume called")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Timber.i ("onDestroy called")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Timber.i ("onRestart called")
+    }
 
     private fun setup() {
         title = "Autenticación"
@@ -80,14 +98,12 @@ class LoginScreen : AppCompatActivity() {
         signUpButton.setOnClickListener {
             val intent = Intent(this, SignUpScreen::class.java)
             startActivity(intent)
-            finish()
         }
 
         //Forgot password
         forgotPassButton.setOnClickListener {
             val intent = Intent(this, ForgotPassword::class.java)
             startActivity(intent)
-            finish()
         }
     }
 
@@ -101,7 +117,7 @@ class LoginScreen : AppCompatActivity() {
     }
 
     private fun showHome(email: String) {
-        val intent = Intent(this, RecyclerView::class.java).apply {
+        val intent = Intent(this, MainActivity::class.java).apply {
             putExtra("email", email)
         }
         startActivity(intent)

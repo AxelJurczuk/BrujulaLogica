@@ -1,17 +1,16 @@
 package com.example.android.brujulalogica
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_recycler_view.*
+import kotlinx.android.synthetic.main.activity_main.*
+import timber.log.Timber
 
 
-class RecyclerView : AppCompatActivity(), ExampleAdapter.OnItemClickListener {
+class MainActivity : AppCompatActivity(), ExampleAdapter.OnItemClickListener {
 
     private val exampleList = generateList()
     private val adapter = ExampleAdapter(exampleList, this)
@@ -24,7 +23,9 @@ class RecyclerView : AppCompatActivity(), ExampleAdapter.OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_recycler_view)
+        Timber.i ("onCreated called")
+
+        setContentView(R.layout.activity_main)
 
         //RecyclerView
         recycler_view.adapter = adapter
@@ -57,7 +58,34 @@ class RecyclerView : AppCompatActivity(), ExampleAdapter.OnItemClickListener {
     override fun onStart() {
         super.onStart()
         auth!!.addAuthStateListener(this.authStateListener!!)
+        Timber.i ("onStart called")
     }
+
+    override fun onStop() {
+        super.onStop()
+        auth!!.removeAuthStateListener(this.authStateListener!!)
+        Timber.i ("onStop called")
+    }
+    override fun onPause() {
+        super.onPause()
+        Timber.i ("onPause called")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Timber.i ("onResume called")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Timber.i ("onDestroy called")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Timber.i ("onRestart called")
+    }
+
 
     private fun setUp() {
         title = "Inicio"
@@ -68,6 +96,7 @@ class RecyclerView : AppCompatActivity(), ExampleAdapter.OnItemClickListener {
             onBackPressed()
         }
     }
+
 
     override fun onItemClick(position: Int) {
 
